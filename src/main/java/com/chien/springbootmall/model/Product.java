@@ -1,6 +1,5 @@
 package com.chien.springbootmall.model;
 
-import com.chien.springbootmall.constant.ProductCategory;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.annotation.processing.Generated;
@@ -12,9 +11,6 @@ public class Product {
 
     private Integer productId;
     private String productName;
-
-    private ProductCategory category;
-
     private String imageUrl;
     private Integer price;
     private Integer stock;
@@ -47,11 +43,9 @@ public class Product {
         this.productName = productName;
     }
 
-    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
