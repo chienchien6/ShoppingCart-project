@@ -1,8 +1,8 @@
 package com.chien.springbootmall.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import javax.annotation.processing.Generated;
+import com.chien.springbootmall.constant.ProductCategory;
+
 import java.util.Date;
 
 
@@ -15,9 +15,17 @@ public class Product {
     private Integer price;
     private Integer stock;
     private String description;
-
+    private ProductCategory category;
     private Date createDate;
     private Date lastModifiedDate;
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
 
     public Date getLastModifiedDate() {
         return lastModifiedDate;
@@ -43,11 +51,6 @@ public class Product {
         this.productName = productName;
     }
 
-        return category;
-    }
-
-        this.category = category;
-    }
 
     public String getImageUrl() {
         return imageUrl;
