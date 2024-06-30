@@ -4,8 +4,12 @@ import com.chien.springbootmall.dto.ProductRequest;
 import com.chien.springbootmall.model.Product;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 public interface ProductDao {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 

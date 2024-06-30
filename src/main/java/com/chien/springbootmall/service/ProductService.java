@@ -3,8 +3,12 @@ package com.chien.springbootmall.service;
 import com.chien.springbootmall.dto.ProductRequest;
 import com.chien.springbootmall.model.Product;
 
+import java.util.List;
+
 
 public interface ProductService {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 
