@@ -34,7 +34,15 @@ public class ProductDaoImpl implements ProductDao {
         Map<String,Object> map = new HashMap<>();
 
         //查詢條件
-       sql = addFilteringSql(sql,map,productQueryParams);
+        if(productQueryParams.getCategory()!=null){
+            sql =sql+" AND category=:category";
+            map.put("category",productQueryParams.getCategory().name());
+        }
+
+        if(productQueryParams.getSearch()!=null){
+            sql =sql+" AND product_name LIKE :search";
+            map.put("search","%"+ productQueryParams.getSearch() + "%");
+        }
 
         //排序
         sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
@@ -47,20 +55,6 @@ public class ProductDaoImpl implements ProductDao {
         List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
         return productList;
 
-    }
-
-    @Override
-    public Integer countProduct(ProductQueryParams productQueryParams) {
-        String sql = "SELECT count(*) FROM product WHERE 1=1";
-
-        Map<String,Object> map = new HashMap<>();
-
-        //查詢條件
-        sql = addFilteringSql(sql,map,productQueryParams);
-
-      Integer total = namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
-
-        return total;
     }
 
     @Override
@@ -80,8 +74,6 @@ public class ProductDaoImpl implements ProductDao {
         }
 
     }
-
-
 
     @Override
     public Integer createProduct(ProductRequest productRequest) {
@@ -139,30 +131,5 @@ public class ProductDaoImpl implements ProductDao {
         map.put("productId", productId);
 
         namedParameterJdbcTemplate.update(sql,map);
-    }
-
-    //原先查詢條件 在getProduct跟getCount方法裡的程式,為了達到重複利用,與好維護,只需修改一個地方,
-//    直接寫成一個獨立但private的方法
-//    if(productQueryParams.getCategory()!=null){
-//        sql =sql+" AND category=:category";
-//        map.put("category",productQueryParams.getCategory().name());
-//    }
-//
-//        if(productQueryParams.getSearch()!=null){
-//        sql =sql+" AND product_name LIKE :search";
-//        map.put("search","%"+ productQueryParams.getSearch() + "%");
-//    }
-    private  String addFilteringSql(String sql,Map<String,Object> map,ProductQueryParams productQueryParams){
-        //查詢條件
-        if(productQueryParams.getCategory()!=null){
-            sql =sql+" AND category=:category";
-            map.put("category",productQueryParams.getCategory().name());
-        }
-
-        if(productQueryParams.getSearch()!=null){
-            sql =sql+" AND product_name LIKE :search";
-            map.put("search","%"+ productQueryParams.getSearch() + "%");
-        }
-        return sql;
     }
 }
